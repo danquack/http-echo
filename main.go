@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 func echo(w http.ResponseWriter, req *http.Request) {
 	if b, err := json.Marshal(req.Header); err == nil {
-		fmt.Printf("{\"Headers\": %v}\n", string(b))
+		if v, _ := os.LookupEnv("LOG_HEADERS"); v == "true" {
+			fmt.Printf("{\"Headers\": %v}\n", string(b))
+		}
 	}
 	if b, err := io.ReadAll(req.Body); err == nil {
 		fmt.Println(string(b))

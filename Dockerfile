@@ -13,6 +13,7 @@ RUN go build -o /go/bin/echo
 FROM scratch
 # Copy our static executable.
 COPY --from=builder /go/bin/echo /echo
+ENV LOG_HEADERS "true"
 EXPOSE 8090
 # Run the hello binary.
 ENTRYPOINT ["/echo"]
